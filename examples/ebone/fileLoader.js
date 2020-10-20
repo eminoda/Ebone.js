@@ -75,17 +75,21 @@ class FileLoader {
 
 function loadFile(fullpath) {
   const extname = path.extname(fullpath);
-  //   if (extname && extname !== '.js') {
-  //     return fs.readFileSync(fullpath);
-  //   }
+  if (extname && extname !== '.js') {
+    return fs.readFileSync(fullpath);
+  }
   return require(fullpath);
 }
 const fileLoaderIns = new FileLoader({
   directory: path.resolve(__dirname, './model'),
-  match: ['**/*.js', '**/*.json'],
-  inject: {},
+  match: ['**/*.js', '**/*.txt'],
+  inject: {
+    none: 'hello! I"m inject params',
+  },
   target: {},
 });
 
 const result = fileLoaderIns.load();
 console.log(result);
+
+// console.log(JSON.parse(result.d.toString()).user);
